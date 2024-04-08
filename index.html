@@ -81,6 +81,7 @@
 
 <script>
 var originalScreen = document.querySelector('.button-container').innerHTML;
+var originalBackgroundColor = '#000'; // 초기 배경색은 검정색으로 설정
 
 function showButtons(label) {
   var container = document.querySelector('.button-container');
@@ -92,6 +93,8 @@ function showButtons(label) {
   backButton.textContent = '<'; // 텍스트 변경
   backButton.onclick = function() {
     container.innerHTML = originalScreen;
+    // 배경색을 검정색으로 변경
+    document.body.style.backgroundColor = originalBackgroundColor;
   };
   container.appendChild(backButton);
 
