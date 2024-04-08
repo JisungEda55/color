@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>페이지 제목</title>
+<title>PICOR</title>
 <style>
   /* CSS 스타일 */
   body {
@@ -15,6 +15,7 @@
     padding: 0;
   }
   .button-container {
+    position: relative; /* 버튼 컨테이너를 relative로 설정하여 내부 요소의 absolute 위치 설정 기준으로 사용 */
     display: flex;
     flex-direction: column; /* 버튼을 세로로 배열 */
     justify-content: center;
@@ -48,16 +49,55 @@
     --y: var(--move-hover);
     --shadow: var(--shadow-hover);
   }
+  .back-button {
+    position: absolute; /* 좌측 상단에 위치시킬 버튼을 absolute로 설정 */
+    top: 10px; /* 상단 여백 조정 */
+    left: 10px; /* 좌측 여백 조정 */
+    width: 40px; /* 버튼 크기 조정 */
+    height: 40px; /* 버튼 크기 조정 */
+    border-radius: 50%; /* 버튼을 원형으로 설정 */
+    background-color: #fff; /* 배경색을 흰색으로 설정 */
+    color: #000; /* 텍스트 색상을 검정색으로 설정 */
+    border: none;
+    cursor: pointer;
+    font-size: 20px; /* 텍스트 크기 조정 */
+  }
 </style>
 </head>
 <body>
 
 <!-- HTML 요소 -->
 <div class="button-container">
-  <button class="button">Friendly</button>
-  <button class="button">Apple</button>
-  <button class="button">WeHolic</button>
+  <button class="button" onclick="showButtons('Friendly')">Friendly</button>
+  <button class="button" onclick="showButtons('Apple')">Apple</button>
+  <button class="button" onclick="showButtons('WeHolic')">WeHolic</button>
 </div>
+
+<script>
+var originalScreen = document.querySelector('.button-container').innerHTML;
+
+function showButtons(label) {
+  var container = document.querySelector('.button-container');
+  container.innerHTML = ''; // 기존 버튼 제거
+
+  // 새로운 버튼 추가
+  for (var i = 1; i <= 12; i++) {
+    var button = document.createElement('button');
+    button.className = 'button';
+    button.textContent = label + ' ' + i;
+    container.appendChild(button);
+  }
+
+  // 이전 화면으로 돌아가는 버튼 추가
+  var backButton = document.createElement('button');
+  backButton.className = 'back-button'; // 클래스 변경
+  backButton.textContent = '<'; // 텍스트 변경
+  backButton.onclick = function() {
+    container.innerHTML = originalScreen;
+  };
+  container.appendChild(backButton);
+}
+</script>
 
 </body>
 </html>
