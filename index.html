@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html> 
+<html lang="en"> 
+<!-- JisungEda55 -->
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>페이지 제목</title>
+<title>PICOR</title> 
 <style>
-  /* CSS 스타일 */
+  /* Font License @LOTTE Corp */
   @font-face {
     font-family: 'TheJamsil';
     font-weight: 700;
@@ -19,13 +20,13 @@
   }
 
   body {
-    font-family: 'TheJamsil', Arial, sans-serif; /* TheJamsil 폰트 적용 */
+    font-family: 'TheJamsil', Arial, sans-serif; 
     background-color: #000;
     color: #fff;
     text-align: center;
     margin: 0;
     padding: 0;
-    overflow: hidden; /* 배경색 애니메이션을 위해 오버플로우를 숨김 */
+    overflow: hidden; /* Hide Overflow to BG Anime */
   }
 
   .button-container {
@@ -57,7 +58,7 @@
     margin: 10px 0;
     cursor: pointer;
     box-shadow: var(--shadow);
-    font-family: 'TheJamsil', Arial, sans-serif; /* TheJamsil 폰트 적용 */
+    font-family: 'TheJamsil', Arial, sans-serif; 
     transform: translateY(var(--y)) translateZ(0);
     transition: transform var(--duration) ease, box-shadow var(--duration) ease, background-color var(--duration) ease, color var(--duration) ease;
   }
@@ -80,7 +81,7 @@
     border: none;
     cursor: pointer;
     font-size: 20px;
-    font-family: 'TheJamsil', Arial, sans-serif; /* TheJamsil 폰트 적용 */
+    font-family: 'TheJamsil', Arial, sans-serif; 
     transition: transform var(--duration) ease, background-color var(--duration) ease, color var(--duration) ease;
   }
 
@@ -91,50 +92,49 @@
 </head>
 <body>
 
-<!-- HTML 요소 -->
+<!-- Hello Page -->
 <div class="button-container">
   <button class="button" onclick="showButtons('Friendly')">Friendly</button>
   <button class="button" onclick="showButtons('Apple')">Apple</button>
   <button class="button" onclick="showButtons('WeHolic')">WeHolic</button>
-  <!-- "With." 버튼 추가 -->
-  <button class="button" onclick="showAdditionalButtons()">With.</button>
+  <!-- "Thanks to." -->
+  <button class="button" onclick="showAdditionalButtons()">Thanks to.</button>
 </div>
 
 <script>
 var originalScreen = document.querySelector('.button-container').innerHTML;
-var originalBackgroundColor = '#000'; // 초기 배경색은 검정색으로 설정
+var originalBackgroundColor = '#000'; // First BG Color set
 
 function showButtons(label) {
   var container = document.querySelector('.button-container');
-  container.innerHTML = ''; // 기존 버튼 제거
+  container.innerHTML = ''; 
 
-  // 이전 화면으로 돌아가는 버튼 추가
+  // Go HelloPage
   var backButton = document.createElement('button');
-  backButton.className = 'back-button'; // 클래스 변경
-  backButton.textContent = '<'; // 텍스트 변경
+  backButton.className = 'back-button'; 
+  backButton.textContent = '<'; 
   backButton.onclick = function() {
     container.innerHTML = originalScreen;
-    // 배경색을 검정색으로 변경
+    // BG to origin
     document.body.style.backgroundColor = originalBackgroundColor;
   };
   container.appendChild(backButton);
 
-  // 버튼 추가
   switch(label) {
     case 'Friendly':
-      createButton(container, '#000000', '#ffffff', '#ff0000', '#00ff15', '#003cff', '#ffcc00', '#ffcc00', '#1c1c1c');
+      createButton(container, '#ffffff', '#000000', '#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#ffff00', '#00ffff');
       break;
     case 'Apple':
-      createButton(container, 'rgb(255, 59, 48)', 'rgb(255, 204, 0)', 'rgb(52, 199, 89)', 'rgb(50, 173, 230)', 'rgb(255, 45, 85)', 'rgb(242, 242, 247)', 'rgb(28, 28, 30)');
+      createButton(container, 'rgb(242, 242, 247)', 'rgb(28, 28, 30)', 'rgb(52, 199, 89)', 'rgb(255, 59, 48)', 'rgb(255, 149, 0)', 'rgb(255, 204, 0)', 'rgb(0, 122, 255)', 'rgb(175, 82, 222)', 'rgb(255, 45, 85)',);
       break;
     case 'WeHolic':
-      createButton(container, '#FAC000', '#FF8282');
+      createButton(container, '#FAC000', '#FF8282', '#e63946', '#3a86ff', '#ffb3c6', '#ff8fab', '#a7c957', '#f2f2f7');
       break;
     default:
       console.error('Invalid label');
   }
 
-  // 배경색 애니메이션 효과 추가
+  // BG Anime
   var colors = container.querySelectorAll('.button');
   colors.forEach((colorButton, index) => {
     colorButton.addEventListener('click', () => {
@@ -155,23 +155,20 @@ function createButton(container, ...colors) {
   });
 }
 
-// "With." 버튼 클릭 시 추가 버튼 표시
 function showAdditionalButtons() {
   var container = document.querySelector('.button-container');
-  container.innerHTML = ''; // 기존 버튼 제거
+  container.innerHTML = ''; 
 
-  // 이전 화면으로 돌아가는 버튼 추가
   var backButton = document.createElement('button');
-  backButton.className = 'back-button'; // 클래스 변경
-  backButton.textContent = '<'; // 텍스트 변경
+  backButton.className = 'back-button'; 
+  backButton.textContent = '<'; 
   backButton.onclick = function() {
     container.innerHTML = originalScreen;
-    // 배경색을 검정색으로 변경
     document.body.style.backgroundColor = originalBackgroundColor;
   };
   container.appendChild(backButton);
 
-  // Apple Colors 버튼 추가
+  // Apple Colors Button
   var appleColorsButton = document.createElement('button');
   appleColorsButton.className = 'button';
   appleColorsButton.textContent = 'Apple Colors';
@@ -180,7 +177,7 @@ function showAdditionalButtons() {
   };
   container.appendChild(appleColorsButton);
 
-  // JisungEda55 GitHub 버튼 추가
+  // JisungEda55 GitHub Button
   var jisungEda55Button = document.createElement('button');
   jisungEda55Button.className = 'button';
   jisungEda55Button.textContent = 'JisungEda55 GitHub';
@@ -189,7 +186,7 @@ function showAdditionalButtons() {
   };
   container.appendChild(jisungEda55Button);
 
-  // Donation Toss 버튼 추가
+  // Donation Toss Butotn
   var donationTossButton = document.createElement('button');
   donationTossButton.className = 'button';
   donationTossButton.textContent = 'Donation TOSS';
