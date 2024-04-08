@@ -96,6 +96,8 @@
   <button class="button" onclick="showButtons('Friendly')">Friendly</button>
   <button class="button" onclick="showButtons('Apple')">Apple</button>
   <button class="button" onclick="showButtons('WeHolic')">WeHolic</button>
+  <!-- "With." 버튼 추가 -->
+  <button class="button" onclick="showAdditionalButtons()">With.</button>
 </div>
 
 <script>
@@ -151,6 +153,50 @@ function createButton(container, ...colors) {
     button.textContent = color;
     container.appendChild(button);
   });
+}
+
+// "With." 버튼 클릭 시 추가 버튼 표시
+function showAdditionalButtons() {
+  var container = document.querySelector('.button-container');
+  container.innerHTML = ''; // 기존 버튼 제거
+
+  // 이전 화면으로 돌아가는 버튼 추가
+  var backButton = document.createElement('button');
+  backButton.className = 'back-button'; // 클래스 변경
+  backButton.textContent = '<'; // 텍스트 변경
+  backButton.onclick = function() {
+    container.innerHTML = originalScreen;
+    // 배경색을 검정색으로 변경
+    document.body.style.backgroundColor = originalBackgroundColor;
+  };
+  container.appendChild(backButton);
+
+  // Apple Colors 버튼 추가
+  var appleColorsButton = document.createElement('button');
+  appleColorsButton.className = 'button';
+  appleColorsButton.textContent = 'Apple Colors';
+  appleColorsButton.onclick = function() {
+    window.location.href = 'https://developer.apple.com/design/human-interface-guidelines/color';
+  };
+  container.appendChild(appleColorsButton);
+
+  // JisungEda55 GitHub 버튼 추가
+  var jisungEda55Button = document.createElement('button');
+  jisungEda55Button.className = 'button';
+  jisungEda55Button.textContent = 'JisungEda55 GitHub';
+  jisungEda55Button.onclick = function() {
+    window.location.href = 'https://github.com/JisungEda55/picor';
+  };
+  container.appendChild(jisungEda55Button);
+
+  // Donation Toss 버튼 추가
+  var donationTossButton = document.createElement('button');
+  donationTossButton.className = 'button';
+  donationTossButton.textContent = 'Donation TOSS';
+  donationTossButton.onclick = function() {
+    window.location.href = 'https://toss.me/jisungeda';
+  };
+  container.appendChild(donationTossButton);
 }
 </script>
 
