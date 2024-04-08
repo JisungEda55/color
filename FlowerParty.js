@@ -1,219 +1,202 @@
-(function () {
-    // globals
-    var canvas;
-    var ctx;
-    var W;
-    var H;
-    var mp = 150; //max particles
-    var particles = [];
-    var angle = 0;
-    var tiltAngle = 0;
-    var confettiActive = true;
-    var animationComplete = true;
-    var deactivationTimerHandler;
-    var reactivationTimerHandler;
-    var animationHandler;
+<!DOCTYPE html> 
+<html lang="en"> 
+<!-- JisungEda55 -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PICOR</title> 
+<style>
+  /* Font License @LOTTE Corp */
+  @font-face {
+    font-family: 'TheJamsil';
+    font-weight: 700;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Bold.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Bold.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Bold.woff2') format('woff2'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Bold.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Bold.ttf') format("truetype");
+    font-display: swap;
+  }
 
-    // objects
+  body {
+    font-family: 'TheJamsil', Arial, sans-serif; 
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Hide Overflow to BG Anime */
+  }
 
-    var particleColors = {
-        colorOptions: ["DodgerBlue", "OliveDrab", "Gold", "pink", "SlateBlue", "lightblue", "Violet", "PaleGreen", "SteelBlue", "SandyBrown", "Chocolate", "Crimson"],
-        colorIndex: 0,
-        colorIncrementer: 0,
-        colorThreshold: 10,
-        getColor: function () {
-            if (this.colorIncrementer >= 10) {
-                this.colorIncrementer = 0;
-                this.colorIndex++;
-                if (this.colorIndex >= this.colorOptions.length) {
-                    this.colorIndex = 0;
-                }
-            }
-            this.colorIncrementer++;
-            return this.colorOptions[this.colorIndex];
-        }
-    }
+  .button-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  transition: height 0.5s ease;
+}
 
-    function confettiParticle(color) {
-        this.x = Math.random() * W; // x-coordinate
-        this.y = (Math.random() * H) - H; //y-coordinate
-        this.r = RandomFromTo(10, 15); //radius;
-        this.d = (Math.random() * mp) + 10; //density;
-        this.color = color;
-        this.tilt = Math.floor(Math.random() * 10) - 10;
-        this.tiltAngleIncremental = (Math.random() * 0.07) + .05;
-        this.tiltAngle = 0;
+  .button {
+    --background: #fff;
+    --text: #000;
+    --font-size: 16px;
+    --duration: .44s;
+    --move-hover: -4px;
+    --shadow: 0 2px 8px -1px rgba(0, 0, 0, .32);
+    --shadow-hover: 0 4px 20px -2px rgba(0, 0, 0, .5);
+    --font-shadow: var(--font-size);
+    width: 150px;
+    height: 50px;
+    padding: 10px 20px;
+    font-size: var(--font-size);
+    background-color: var(--background);
+    color: var(--text);
+    border: none;
+    border-radius: 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    font-family: 'TheJamsil', Arial, sans-serif; 
+    transform: translateY(var(--y)) translateZ(0);
+    transition: transform var(--duration) ease, box-shadow var(--duration) ease, background-color var(--duration) ease, color var(--duration) ease;
+  }
 
-        this.draw = function () {
-            ctx.beginPath();
-            ctx.lineWidth = this.r / 2;
-            ctx.strokeStyle = this.color;
-            ctx.moveTo(this.x + this.tilt + (this.r / 4), this.y);
-            ctx.lineTo(this.x + this.tilt, this.y + this.tilt + (this.r / 4));
-            return ctx.stroke();
-        }
-    }
+  .button:hover {
+    --y: var(--move-hover);
+    --shadow: var(--shadow-hover);
+    transform: translateY(calc(var(--move-hover) * 1.1));
+  }
 
-    $(document).ready(function () {
-        SetGlobals();
-        InitializeButton();
-        //InitializeConfetti();
+  .back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    font-family: 'TheJamsil', Arial, sans-serif; 
+    transition: transform var(--duration) ease, background-color var(--duration) ease, color var(--duration) ease;
+  }
 
-        $(window).resize(function () {
-            W = window.innerWidth;
-            H = window.innerHeight;
-            canvas.width = W;
-            canvas.height = H;
-        });
+  .back-button:hover {
+    transform: scale(1.1);
+  }
+</style>
+</head>
+<body>
 
+<!-- Hello Page -->
+<div class="button-container">
+  <button class="button" onclick="showButtons('Friendly')">Friendly</button>
+  <button class="button" onclick="showButtons('Apple')">Apple</button>
+  <button class="button" onclick="showButtons('WeHolic')">WeHolic</button>
+  <!-- "Thanks to." -->
+  <button class="button" onclick="showAdditionalButtons()">Thanks to.</button>
+</div>
+
+<script>
+var originalScreen = document.querySelector('.button-container').innerHTML;
+var originalBackgroundColor = '#000'; // First BG Color set
+
+function showButtons(label) {
+  var container = document.querySelector('.button-container');
+  container.innerHTML = ''; 
+
+  // Go HelloPage
+  var backButton = document.createElement('button');
+  backButton.className = 'back-button'; 
+  backButton.textContent = '<'; 
+  backButton.onclick = function() {
+    container.innerHTML = originalScreen;
+    // BG to origin
+    document.body.style.backgroundColor = originalBackgroundColor;
+  };
+  container.appendChild(backButton);
+
+  switch(label) {
+    case 'Friendly':
+      createButton(container, '#ffffff', '#000000', '#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#ffff00', '#00ffff');
+      break;
+    case 'Apple':
+      createButton(container, 'rgb(242, 242, 247)', 'rgb(28, 28, 30)', 'rgb(52, 199, 89)', 'rgb(255, 59, 48)', 'rgb(255, 149, 0)', 'rgb(255, 204, 0)', 'rgb(0, 122, 255)', 'rgb(175, 82, 222)', 'rgb(255, 45, 85)',);
+      break;
+    case 'WeHolic':
+      createButton(container, '#FAC000', '#FF8282', '#e63946', '#3a86ff', '#ffb3c6', '#ff8fab', '#a7c957', '#f2f2f7');
+      break;
+    default:
+      console.error('Invalid label');
+  }
+
+  // BG Anime
+  var colors = container.querySelectorAll('.button');
+  colors.forEach((colorButton, index) => {
+    colorButton.addEventListener('click', () => {
+      var body = document.querySelector('body');
+      body.style.transition = `background-color 1s ease-in-out ${index * 0.2}s`;
+      body.style.backgroundColor = window.getComputedStyle(colorButton).getPropertyValue('background-color');
     });
+  });
+}
 
-    function InitializeButton() {
-        $('#stopButton').click(DeactivateConfetti);
-        $('#startButton').click(RestartConfetti);
-    }
+function createButton(container, ...colors) {
+  colors.forEach(color => {
+    var button = document.createElement('button');
+    button.className = 'button';
+    button.style.backgroundColor = color;
+    button.textContent = color;
+    container.appendChild(button);
+  });
+}
 
-    function SetGlobals() {
-        canvas = document.getElementById("canvas");
-        ctx = canvas.getContext("2d");
-        W = window.innerWidth;
-        H = window.innerHeight;
-        canvas.width = W;
-        canvas.height = H;
-    }
+function showAdditionalButtons() {
+  var container = document.querySelector('.button-container');
+  container.innerHTML = ''; 
 
-    function InitializeConfetti() {
-        particles = [];
-        animationComplete = false;
-        for (var i = 0; i < mp; i++) {
-            var particleColor = particleColors.getColor();
-            particles.push(new confettiParticle(particleColor));
-        }
-        StartConfetti();
-    }
+  var backButton = document.createElement('button');
+  backButton.className = 'back-button'; 
+  backButton.textContent = '<'; 
+  backButton.onclick = function() {
+    container.innerHTML = originalScreen;
+    document.body.style.backgroundColor = originalBackgroundColor;
+  };
+  container.appendChild(backButton);
 
-    function Draw() {
-        ctx.clearRect(0, 0, W, H);
-        var results = [];
-        for (var i = 0; i < mp; i++) {
-            (function (j) {
-                results.push(particles[j].draw());
-            })(i);
-        }
-        Update();
+  // Apple Colors Button
+  var appleColorsButton = document.createElement('button');
+  appleColorsButton.className = 'button';
+  appleColorsButton.textContent = 'Apple Colors';
+  appleColorsButton.onclick = function() {
+    window.location.href = 'https://developer.apple.com/design/human-interface-guidelines/color';
+  };
+  container.appendChild(appleColorsButton);
 
-        return results;
-    }
+  // JisungEda55 GitHub Button
+  var jisungEda55Button = document.createElement('button');
+  jisungEda55Button.className = 'button';
+  jisungEda55Button.textContent = 'JisungEda55 GitHub';
+  jisungEda55Button.onclick = function() {
+    window.location.href = 'https://github.com/JisungEda55/picor';
+  };
+  container.appendChild(jisungEda55Button);
 
-    function RandomFromTo(from, to) {
-        return Math.floor(Math.random() * (to - from + 1) + from);
-    }
+  // Donation Toss Butotn
+  var donationTossButton = document.createElement('button');
+  donationTossButton.className = 'button';
+  donationTossButton.textContent = 'Donation TOSS';
+  donationTossButton.onclick = function() {
+    window.location.href = 'https://toss.me/jisungeda';
+  };
+  container.appendChild(donationTossButton);
+}
+</script>
 
-
-    function Update() {
-        var remainingFlakes = 0;
-        var particle;
-        angle += 0.01;
-        tiltAngle += 0.1;
-
-        for (var i = 0; i < mp; i++) {
-            particle = particles[i];
-            if (animationComplete) return;
-
-            if (!confettiActive && particle.y < -15) {
-                particle.y = H + 100;
-                continue;
-            }
-
-            stepParticle(particle, i);
-
-            if (particle.y <= H) {
-                remainingFlakes++;
-            }
-            CheckForReposition(particle, i);
-        }
-
-        if (remainingFlakes === 0) {
-            StopConfetti();
-        }
-    }
-
-    function CheckForReposition(particle, index) {
-        if ((particle.x > W + 20 || particle.x < -20 || particle.y > H) && confettiActive) {
-            if (index % 5 > 0 || index % 2 == 0) //66.67% of the flakes
-            {
-                repositionParticle(particle, Math.random() * W, -10, Math.floor(Math.random() * 10) - 20);
-            } else {
-                if (Math.sin(angle) > 0) {
-                    //Enter from the left
-                    repositionParticle(particle, -20, Math.random() * H, Math.floor(Math.random() * 10) - 20);
-                } else {
-                    //Enter from the right
-                    repositionParticle(particle, W + 20, Math.random() * H, Math.floor(Math.random() * 10) - 20);
-                }
-            }
-        }
-    }
-    function stepParticle(particle, particleIndex) {
-        particle.tiltAngle += particle.tiltAngleIncremental;
-        particle.y += (Math.cos(angle + particle.d) + 3 + particle.r / 2) / 3;
-        particle.x += Math.sin(angle);
-        particle.tilt = (Math.sin(particle.tiltAngle - (particleIndex / 3))) * 15;
-    }
-
-    function repositionParticle(particle, xCoordinate, yCoordinate, tilt) {
-        particle.x = xCoordinate;
-        particle.y = yCoordinate;
-        particle.tilt = tilt;
-    }
-
-    function StartConfetti() {
-        W = window.innerWidth;
-        H = window.innerHeight;
-        canvas.width = W;
-        canvas.height = H;
-        (function animloop() {
-            if (animationComplete) return null;
-            animationHandler = requestAnimFrame(animloop);
-            return Draw();
-        })();
-    }
-
-    function ClearTimers() {
-        clearTimeout(reactivationTimerHandler);
-        clearTimeout(animationHandler);
-    }
-
-    function DeactivateConfetti() {
-        confettiActive = false;
-        ClearTimers();
-    }
-
-    function StopConfetti() {
-        animationComplete = true;
-        if (ctx == undefined) return;
-        ctx.clearRect(0, 0, W, H);
-    }
-
-    function RestartConfetti() {
-        ClearTimers();
-        StopConfetti();
-        reactivationTimerHandler = setTimeout(function () {
-            confettiActive = true;
-            animationComplete = false;
-            InitializeConfetti();
-        }, 100);
-
-    }
-
-    window.requestAnimFrame = (function () {
-        return window.requestAnimationFrame || 
-        window.webkitRequestAnimationFrame || 
-        window.mozRequestAnimationFrame || 
-        window.oRequestAnimationFrame || 
-        window.msRequestAnimationFrame || 
-        function (callback) {
-            return window.setTimeout(callback, 1000 / 60);
-        };
-    })();
-})();
+</body>
+</html>
