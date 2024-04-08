@@ -6,65 +6,84 @@
 <title>페이지 제목</title>
 <style>
   /* CSS 스타일 */
+  @font-face {
+    font-family: 'TheJamsil';
+    font-weight: 700;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Bold.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Bold.eot?#iefix') format('embedded-opentype'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Bold.woff2') format('woff2'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Bold.woff') format('woff'),
+        url('https://cdn.jsdelivr.net/gh/webfontworld/TheJamsil/TheJamsil-Bold.ttf') format("truetype");
+    font-display: swap;
+  }
+
   body {
+    font-family: 'TheJamsil', Arial, sans-serif; /* TheJamsil 폰트 적용 */
     background-color: #000;
     color: #fff;
-    font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
     padding: 0;
     overflow: hidden; /* 배경색 애니메이션을 위해 오버플로우를 숨김 */
   }
+
   .button-container {
-    position: relative; /* 버튼 컨테이너를 relative로 설정하여 내부 요소의 absolute 위치 설정 기준으로 사용 */
+    position: relative;
     display: flex;
-    flex-direction: column; /* 버튼을 세로로 배열 */
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
   }
+
   .button {
-    --background: #fff; /* 배경색을 흰색으로 변경 */
-    --text: #000; /* 텍스트를 검정색으로 변경 */
+    --background: #fff;
+    --text: #000;
     --font-size: 16px;
     --duration: .44s;
     --move-hover: -4px;
-    --shadow: 0 2px 8px -1px rgba(0, 0, 0, .32); /* 그림자 색상 수정 */
-    --shadow-hover: 0 4px 20px -2px rgba(0, 0, 0, .5); /* 호버시 그림자 색상 수정 */
+    --shadow: 0 2px 8px -1px rgba(0, 0, 0, .32);
+    --shadow-hover: 0 4px 20px -2px rgba(0, 0, 0, .5);
     --font-shadow: var(--font-size);
-    width: 150px; /* 가로 크기를 고정 */
-    height: 50px; /* 세로 크기를 고정 */
+    width: 150px;
+    height: 50px;
     padding: 10px 20px;
     font-size: var(--font-size);
     background-color: var(--background);
     color: var(--text);
     border: none;
-    border-radius: 20px; /* 모서리를 더 둥글게 수정 */
-    margin: 10px 0; /* 버튼 간격을 조정 */
+    border-radius: 20px;
+    margin: 10px 0;
     cursor: pointer;
     box-shadow: var(--shadow);
+    font-family: 'TheJamsil', Arial, sans-serif; /* TheJamsil 폰트 적용 */
     transform: translateY(var(--y)) translateZ(0);
     transition: transform var(--duration) ease, box-shadow var(--duration) ease, background-color var(--duration) ease, color var(--duration) ease;
   }
+
   .button:hover {
     --y: var(--move-hover);
     --shadow: var(--shadow-hover);
-    transform: translateY(calc(var(--move-hover) * 1.1)); /* hover 시 약간 더 이동 */
+    transform: translateY(calc(var(--move-hover) * 1.1));
   }
+
   .back-button {
-    position: absolute; /* 좌측 상단에 위치시킬 버튼을 absolute로 설정 */
-    top: 10px; /* 상단 여백 조정 */
-    left: 10px; /* 좌측 여백 조정 */
-    width: 40px; /* 버튼 크기 조정 */
-    height: 40px; /* 버튼 크기 조정 */
-    border-radius: 50%; /* 버튼을 원형으로 설정 */
-    background-color: #fff; /* 배경색을 흰색으로 설정 */
-    color: #000; /* 텍스트 색상을 검정색으로 설정 */
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #000;
     border: none;
     cursor: pointer;
-    font-size: 20px; /* 텍스트 크기 조정 */
+    font-size: 20px;
+    font-family: 'TheJamsil', Arial, sans-serif; /* TheJamsil 폰트 적용 */
     transition: transform var(--duration) ease, background-color var(--duration) ease, color var(--duration) ease;
   }
+
   .back-button:hover {
     transform: scale(1.1);
   }
