@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>페이지 제목</title>
+<style>
+  /* CSS 스타일 */
+  body {
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+  .button-container {
+    display: flex;
+    flex-direction: column; /* 버튼을 세로로 배열 */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .button {
+    --background: #fff; /* 배경색을 흰색으로 변경 */
+    --text: #000; /* 텍스트를 검정색으로 변경 */
+    --font-size: 16px;
+    --duration: .44s;
+    --move-hover: -4px;
+    --shadow: 0 2px 8px -1px rgba(0, 0, 0, .32); /* 그림자 색상 수정 */
+    --shadow-hover: 0 4px 20px -2px rgba(0, 0, 0, .5); /* 호버시 그림자 색상 수정 */
+    --font-shadow: var(--font-size);
+    width: 150px; /* 가로 크기를 고정 */
+    height: 50px; /* 세로 크기를 고정 */
+    padding: 10px 20px;
+    font-size: var(--font-size);
+    background-color: var(--background);
+    color: var(--text);
+    border: none;
+    border-radius: 20px; /* 모서리를 더 둥글게 수정 */
+    margin: 10px 0; /* 버튼 간격을 조정 */
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transform: translateY(var(--y)) translateZ(0);
+    transition: transform var(--duration) ease, box-shadow var(--duration) ease;
+  }
+  .button:hover {
+    --y: var(--move-hover);
+    --shadow: var(--shadow-hover);
+  }
+</style>
+</head>
+<body>
+
+<!-- HTML 요소 -->
+<div class="button-container">
+  <button class="button">Friendly</button>
+  <button class="button">Apple</button>
+  <button class="button">WeHolic</button>
+</div>
+
+</body>
+</html>
