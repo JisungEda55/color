@@ -1,1 +1,1 @@
-# PICOR
+# COLOR
